@@ -52,7 +52,7 @@ index b1b9db56a..0252689da 100644
  	struct user_arg_ptr argv = { .ptr.native = __argv };
  	struct user_arg_ptr envp = { .ptr.native = __envp };
 +#if defined(CONFIG_KSU) && defined(CONFIG_KSU_TRACEPOINT_HOOK)
-+    trace_ksu_trace_execveat_sucompat_hook((int *)AT_FDCWD, &filename, NULL, NULL, NULL);
++    trace_ksu_trace_execveat_hook((int *)AT_FDCWD, &filename, &argv, &envp, 0);
 +#endif
  	return do_execveat_common(AT_FDCWD, filename, argv, envp, 0);
  }
@@ -62,7 +62,7 @@ index b1b9db56a..0252689da 100644
  		.ptr.compat = __envp,
  	};
 +#if defined(CONFIG_KSU) && defined(CONFIG_KSU_TRACEPOINT_HOOK)
-+    trace_ksu_trace_execveat_sucompat_hook((int *)AT_FDCWD, &filename, NULL, NULL, NULL); /* 32-bit su */
++    trace_ksu_trace_execveat_hook((int *)AT_FDCWD, &filename, &argv, &envp, 0); // 32-bit su and 32-on-64 support
 +#endif
  	return do_execveat_common(AT_FDCWD, filename, argv, envp, 0);
  }
